@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: nestuser
+      POSTGRES_PASSWORD: nestpass
+      POSTGRES_DB: nestdb
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db/init-complete.sql:/docker-entrypoint-initdb.d/01-init-complete.sql
+  app:
+    build: .
+    command: npm run start:dev
+    ports:
+      - '3000:3000'
+    environment:
+      DATABASE_URL: postgres://nestuser:nestpass@db:5432/nestdb
+    depends_on:
+      - db
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+volumes:
+  db_data:

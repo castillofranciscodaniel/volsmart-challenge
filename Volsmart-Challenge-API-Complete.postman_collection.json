@@ -1,0 +1,785 @@
+{
+	"info": {
+		"_postman_id": "volsmart-challenge-complete",
+		"name": "Volsmart Challenge API - Complete",
+		"description": "API completa con ABAC, encriptación de contraseñas, relación muchos a muchos usuarios-roles, y sistema optimizado",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login - Manager",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"manager@example.com\",\n  \"password\": \"manager123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "login"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "login"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"user123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "login"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users (Manager)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": ["{{base_url}}"],
+							"path": ["users"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": ["{{base_url}}"],
+							"path": ["users"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users (User) - Should Fail",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": ["{{base_url}}"],
+							"path": ["users"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/550e8400-e29b-41d4-a716-446655440001",
+							"host": ["{{base_url}}"],
+							"path": ["users", "550e8400-e29b-41d4-a716-446655440001"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID (Debug - No ABAC)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/debug/550e8400-e29b-41d4-a716-446655440003",
+							"host": ["{{base_url}}"],
+							"path": ["users", "debug", "550e8400-e29b-41d4-a716-446655440003"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User (Manager)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"newuser@example.com\",\n  \"password\": \"newuser123\",\n  \"salary\": 2500.00,\n  \"roles\": [\n    {\n      \"id\": \"750e8400-e29b-41d4-a716-446655440003\",\n      \"name\": \"USER\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": ["{{base_url}}"],
+							"path": ["users"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"newuser2@example.com\",\n  \"password\": \"newuser123\",\n  \"salary\": 2800.00,\n  \"roles\": [\n    {\n      \"id\": \"750e8400-e29b-41d4-a716-446655440003\",\n      \"name\": \"USER\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": ["{{base_url}}"],
+							"path": ["users"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"updateduser@example.com\",\n  \"salary\": 3200.00\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/550e8400-e29b-41d4-a716-446655440003",
+							"host": ["{{base_url}}"],
+							"path": ["users", "550e8400-e29b-41d4-a716-446655440003"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/550e8400-e29b-41d4-a716-446655440003",
+							"host": ["{{base_url}}"],
+							"path": ["users", "550e8400-e29b-41d4-a716-446655440003"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/profile/me",
+							"host": ["{{base_url}}"],
+							"path": ["users", "profile", "me"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Profile (User) - Should Work",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/profile/me",
+							"host": ["{{base_url}}"],
+							"path": ["users", "profile", "me"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "Get All Roles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/roles",
+							"host": ["{{base_url}}"],
+							"path": ["roles"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Role by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/roles/750e8400-e29b-41d4-a716-446655440001",
+							"host": ["{{base_url}}"],
+							"path": ["roles", "750e8400-e29b-41d4-a716-446655440001"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Role by Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/roles/name/ADMIN",
+							"host": ["{{base_url}}"],
+							"path": ["roles", "name", "ADMIN"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Role (Manager)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"SUPERVISOR\",\n  \"description\": \"Supervisor role with limited permissions\",\n  \"hierarchyLevel\": 2,\n  \"canCreateRoles\": [\"USER\"],\n  \"canModifyRoles\": [\"USER\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/roles",
+							"host": ["{{base_url}}"],
+							"path": ["roles"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Role (Admin) - Should Fail",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"ADMIN\",\n  \"description\": \"Admin role\",\n  \"hierarchyLevel\": 2,\n  \"canCreateRoles\": [\"USER\"],\n  \"canModifyRoles\": [\"USER\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/roles",
+							"host": ["{{base_url}}"],
+							"path": ["roles"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Updated description for MANAGER role\",\n  \"canCreateRoles\": [\"ADMIN\", \"USER\"],\n  \"canModifyRoles\": [\"ADMIN\", \"USER\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/roles/750e8400-e29b-41d4-a716-446655440001",
+							"host": ["{{base_url}}"],
+							"path": ["roles", "750e8400-e29b-41d4-a716-446655440001"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Role",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/roles/750e8400-e29b-41d4-a716-446655440001",
+							"host": ["{{base_url}}"],
+							"path": ["roles", "750e8400-e29b-41d4-a716-446655440001"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payrolls",
+			"item": [
+				{
+					"name": "Get Payrolls for User (Manager)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/payrolls/550e8400-e29b-41d4-a716-446655440002",
+							"host": ["{{base_url}}"],
+							"path": ["payrolls", "550e8400-e29b-41d4-a716-446655440002"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payrolls for User (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/payrolls/550e8400-e29b-41d4-a716-446655440002",
+							"host": ["{{base_url}}"],
+							"path": ["payrolls", "550e8400-e29b-41d4-a716-446655440002"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payrolls for User (User)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/payrolls/550e8400-e29b-41d4-a716-446655440002",
+							"host": ["{{base_url}}"],
+							"path": ["payrolls", "550e8400-e29b-41d4-a716-446655440002"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Payroll (Manager)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"550e8400-e29b-41d4-a716-446655440002\",\n  \"salary\": 6500.00,\n  \"period\": \"2024-01\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/payrolls/550e8400-e29b-41d4-a716-446655440002",
+							"host": ["{{base_url}}"],
+							"path": ["payrolls", "550e8400-e29b-41d4-a716-446655440002"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Payroll (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"550e8400-e29b-41d4-a716-446655440002\",\n  \"salary\": 5500.00,\n  \"period\": \"2024-01\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/payrolls/550e8400-e29b-41d4-a716-446655440002",
+							"host": ["{{base_url}}"],
+							"path": ["payrolls", "550e8400-e29b-41d4-a716-446655440002"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Payroll (User)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"550e8400-e29b-41d4-a716-446655440002\",\n  \"salary\": 3500.00,\n  \"period\": \"2024-01\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/payrolls/550e8400-e29b-41d4-a716-446655440002",
+							"host": ["{{base_url}}"],
+							"path": ["payrolls", "550e8400-e29b-41d4-a716-446655440002"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ABAC Tests",
+			"item": [
+				{
+					"name": "Test Resource Access - Manager",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": ["{{base_url}}"],
+							"path": ["users"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Resource Access - Admin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": ["{{base_url}}"],
+							"path": ["users"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Resource Access - User (Should be filtered)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{user_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": ["{{base_url}}"],
+							"path": ["users"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Error Scenarios",
+			"item": [
+				{
+					"name": "Login with Invalid Credentials",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"invalid@example.com\",\n  \"password\": \"wrongpassword\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "login"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access Protected Route Without Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": ["{{base_url}}"],
+							"path": ["users"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access with Invalid Token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer invalid_token_here"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": ["{{base_url}}"],
+							"path": ["users"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User with Duplicate Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{manager_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"manager@example.com\",\n  \"password\": \"duplicate123\",\n  \"salary\": 2500.00,\n  \"roles\": [\n    {\n      \"id\": \"750e8400-e29b-41d4-a716-446655440003\",\n      \"name\": \"USER\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": ["{{base_url}}"],
+							"path": ["users"]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "manager_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
