@@ -186,7 +186,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"newuser@example.com\",\n  \"password\": \"newuser123\",\n  \"salary\": 2500.00,\n  \"roles\": [\n    {\n      \"id\": \"750e8400-e29b-41d4-a716-446655440003\",\n      \"name\": \"USER\"\n    }\n  ]\n}"
+							"raw": "{\n  \"email\": \"newuser@example.com\",\n  \"password\": \"newuser123\",\n  \"salary\": 2500.00,\n  \"roleIds\": [\"750e8400-e29b-41d4-a716-446655440003\"]\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users",
@@ -212,7 +212,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"newuser2@example.com\",\n  \"password\": \"newuser123\",\n  \"salary\": 2800.00,\n  \"roles\": [\n    {\n      \"id\": \"750e8400-e29b-41d4-a716-446655440003\",\n      \"name\": \"USER\"\n    }\n  ]\n}"
+							"raw": "{\n  \"email\": \"newuser2@example.com\",\n  \"password\": \"newuser123\",\n  \"salary\": 2800.00,\n  \"roleIds\": [\"750e8400-e29b-41d4-a716-446655440003\"]\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users",
@@ -377,7 +377,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"SUPERVISOR\",\n  \"description\": \"Supervisor role with limited permissions\",\n  \"hierarchyLevel\": 2,\n  \"canCreateRoles\": [\"USER\"],\n  \"canModifyRoles\": [\"USER\"]\n}"
+							"raw": "{\n  \"name\": \"SUPERVISOR\",\n  \"description\": \"Supervisor role with limited permissions\",\n  \"type\": \"USER\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/roles",
@@ -403,7 +403,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"ADMIN\",\n  \"description\": \"Admin role\",\n  \"hierarchyLevel\": 2,\n  \"canCreateRoles\": [\"USER\"],\n  \"canModifyRoles\": [\"USER\"]\n}"
+							"raw": "{\n  \"name\": \"ADMIN\",\n  \"description\": \"Admin role\",\n  \"type\": \"ADMIN\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/roles",
@@ -429,7 +429,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"description\": \"Updated description for MANAGER role\",\n  \"canCreateRoles\": [\"ADMIN\", \"USER\"],\n  \"canModifyRoles\": [\"ADMIN\", \"USER\"]\n}"
+							"raw": "{\n  \"description\": \"Updated description for MANAGER role\",\n  \"type\": \"MANAGER\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/roles/750e8400-e29b-41d4-a716-446655440001",
@@ -473,9 +473,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/payrolls/550e8400-e29b-41d4-a716-446655440002",
+							"raw": "{{base_url}}/payrolls/user/550e8400-e29b-41d4-a716-446655440002",
 							"host": ["{{base_url}}"],
-							"path": ["payrolls", "550e8400-e29b-41d4-a716-446655440002"]
+							"path": ["payrolls", "user", "550e8400-e29b-41d4-a716-446655440002"]
 						}
 					},
 					"response": []
@@ -491,9 +491,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/payrolls/550e8400-e29b-41d4-a716-446655440002",
+							"raw": "{{base_url}}/payrolls/user/550e8400-e29b-41d4-a716-446655440002",
 							"host": ["{{base_url}}"],
-							"path": ["payrolls", "550e8400-e29b-41d4-a716-446655440002"]
+							"path": ["payrolls", "user", "550e8400-e29b-41d4-a716-446655440002"]
 						}
 					},
 					"response": []
@@ -509,9 +509,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/payrolls/550e8400-e29b-41d4-a716-446655440002",
+							"raw": "{{base_url}}/payrolls/user/550e8400-e29b-41d4-a716-446655440002",
 							"host": ["{{base_url}}"],
-							"path": ["payrolls", "550e8400-e29b-41d4-a716-446655440002"]
+							"path": ["payrolls", "user", "550e8400-e29b-41d4-a716-446655440002"]
 						}
 					},
 					"response": []
@@ -535,9 +535,9 @@
 							"raw": "{\n  \"userId\": \"550e8400-e29b-41d4-a716-446655440002\",\n  \"salary\": 6500.00,\n  \"period\": \"2024-01\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/payrolls/550e8400-e29b-41d4-a716-446655440002",
+							"raw": "{{base_url}}/payrolls",
 							"host": ["{{base_url}}"],
-							"path": ["payrolls", "550e8400-e29b-41d4-a716-446655440002"]
+							"path": ["payrolls"]
 						}
 					},
 					"response": []
@@ -561,9 +561,9 @@
 							"raw": "{\n  \"userId\": \"550e8400-e29b-41d4-a716-446655440002\",\n  \"salary\": 5500.00,\n  \"period\": \"2024-01\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/payrolls/550e8400-e29b-41d4-a716-446655440002",
+							"raw": "{{base_url}}/payrolls",
 							"host": ["{{base_url}}"],
-							"path": ["payrolls", "550e8400-e29b-41d4-a716-446655440002"]
+							"path": ["payrolls"]
 						}
 					},
 					"response": []
@@ -587,9 +587,9 @@
 							"raw": "{\n  \"userId\": \"550e8400-e29b-41d4-a716-446655440002\",\n  \"salary\": 3500.00,\n  \"period\": \"2024-01\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/payrolls/550e8400-e29b-41d4-a716-446655440002",
+							"raw": "{{base_url}}/payrolls",
 							"host": ["{{base_url}}"],
-							"path": ["payrolls", "550e8400-e29b-41d4-a716-446655440002"]
+							"path": ["payrolls"]
 						}
 					},
 					"response": []
@@ -727,7 +727,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"manager@example.com\",\n  \"password\": \"duplicate123\",\n  \"salary\": 2500.00,\n  \"roles\": [\n    {\n      \"id\": \"750e8400-e29b-41d4-a716-446655440003\",\n      \"name\": \"USER\"\n    }\n  ]\n}"
+							"raw": "{\n  \"email\": \"manager@example.com\",\n  \"password\": \"duplicate123\",\n  \"salary\": 2500.00,\n  \"roleIds\": [\"750e8400-e29b-41d4-a716-446655440003\"]\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users",

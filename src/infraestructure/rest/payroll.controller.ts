@@ -11,10 +11,10 @@ export class PayrollController {
 
   constructor(private readonly payrollService: PayrollService) {}
 
-  @Get(':userId')
+  @Get('user/:userId')
   @UseGuards(RolesGuard)
   @UseABAC()
-  async get(@Req() req, @Param('userId') userId: string) {
+  async getPayrollsByUser(@Req() req, @Param('userId') userId: string) {
     this.logger.info('GET', LOG_LEVEL.INIT, 'Get payrolls request received', {
       userId, 
       requestingUserId: req.user?.id 

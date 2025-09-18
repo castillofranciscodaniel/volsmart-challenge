@@ -67,7 +67,7 @@ describe('PayrollController', () => {
       payrollService.getPayrollsForUser.mockResolvedValue(payrolls);
 
       // Act
-      const result = await controller.get(mockRequest, userId);
+      const result = await controller.getPayrollsByUser(mockRequest, userId);
 
       // Assert
       expect(result).toEqual(payrolls);
@@ -92,7 +92,7 @@ describe('PayrollController', () => {
       payrollService.getPayrollsForUser.mockResolvedValue(payrolls);
 
       // Act
-      const result = await controller.get(userRequest, userId);
+      const result = await controller.getPayrollsByUser(userRequest, userId);
 
       // Assert
       expect(result).toEqual(payrolls);
@@ -117,7 +117,7 @@ describe('PayrollController', () => {
       payrollService.getPayrollsForUser.mockResolvedValue(payrolls);
 
       // Act
-      const result = await controller.get(userRequest, userId);
+      const result = await controller.getPayrollsByUser(userRequest, userId);
 
       // Assert
       expect(result).toEqual(payrolls);
